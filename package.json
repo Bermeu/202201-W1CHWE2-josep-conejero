@@ -11,7 +11,9 @@
     "husky": "^7.0.0",
     "jest": "^27.4.7"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\""
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Bermeu/202201-W1CHWE2-josep-conejero.git"
