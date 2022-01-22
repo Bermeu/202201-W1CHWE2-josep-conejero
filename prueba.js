@@ -1,1 +1,3 @@
-class Nombre {}
+class Nombre {
+  a;
+}
