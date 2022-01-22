@@ -1,3 +1,0 @@
-class Nombre {
-  a;
-}
