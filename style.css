@@ -1,0 +1,45 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  background-color: #f00;
+  width: 600px;
+  height: 700px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.grid {
+  background-color: #ff0;
+  width: 500px;
+  height: 500px;
+}
+
+.buttons {
+  background-color: #f0f;
+  width: 600px;
+  height: 100px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.button {
+  width: 190px;
+  height: 100px;
+}
+
+.button--play {
+  background-color: #0ff;
+}
+.button--stop {
+  background-color: #00f;
+}
+.button--restart {
+  background-color: #3f0;
+}
