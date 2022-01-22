@@ -1,0 +1,26 @@
+{
+  "name": "challenge-weekend",
+  "description": "## Game of Life",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "eslint": "^8.7.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.4",
+    "husky": "^7.0.0",
+    "jest": "^27.4.7"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bermeu/202201-W1CHWE2-josep-conejero.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bermeu/202201-W1CHWE2-josep-conejero/issues"
+  },
+  "homepage": "https://github.com/Bermeu/202201-W1CHWE2-josep-conejero#readme"
+}
