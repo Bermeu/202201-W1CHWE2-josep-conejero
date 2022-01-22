@@ -10,11 +10,9 @@ module.exports = {
     sourceType: "module",
   },
   rules: {
-    rules: {
-      "no-plusplus": "off",
-      "no-restricted-syntax": "off",
-      "no-debugger": "off",
-      "no-console": "off",
-    },
+    "no-plusplus": "off",
+    "no-restricted-syntax": "off",
+    "no-debugger": "off",
+    "no-console": "off",
   },
 };
