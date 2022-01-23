@@ -100,8 +100,8 @@ const rejillaCanvas = document.querySelector(".rejillaCanvas");
 
 // const ctx = rejillaCanvas.getContext("2d");
 
-const filasRejilla = 4;
-const columnasRejilla = 4;
+const filasRejilla = 10;
+const columnasRejilla = 10;
 const tabl1 = new Tablero(filasRejilla, columnasRejilla);
 tabl1.generarRejillaLogicaVacia();
 tabl1.mostrarRejilla();
