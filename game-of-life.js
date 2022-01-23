@@ -34,10 +34,6 @@ class Tablero {
     }
   }
 
-  /* vaciarRejillaLogica() {
-    // this.generarRejillaLogicaVacia();
-  } */
-
   obtenerValorCelda(coordenadas) {
     return this.rejilla[coordenadas[0]][coordenadas[1]];
   }
@@ -97,20 +93,17 @@ class NuevoCanvas {
 }
 
 const rejillaCanvas = document.querySelector(".rejillaCanvas");
-
-// const ctx = rejillaCanvas.getContext("2d");
-
 const filasRejilla = 10;
 const columnasRejilla = 10;
 const tabl1 = new Tablero(filasRejilla, columnasRejilla);
-tabl1.generarRejillaLogicaVacia();
-tabl1.mostrarRejilla();
 const nuevoCanvas = new NuevoCanvas(
   rejillaCanvas,
   filasRejilla,
   columnasRejilla
 );
 
+tabl1.generarRejillaLogicaVacia();
+tabl1.mostrarRejilla();
 nuevoCanvas.dibujarRejilla();
 nuevoCanvas.dibujarCelda([3, 1]);
 
