@@ -92,15 +92,9 @@ class Tablero {
       0
     );
     if (this.rejilla[columna][fila] === 0) {
-      if (numeroCeldasVivas === 3) {
-        valorADevolver = 1;
-      } else {
-        valorADevolver = 0;
-      }
-    } else if (numeroCeldasVivas === 2 || numeroCeldasVivas === 3) {
-      valorADevolver = 1;
+      valorADevolver = numeroCeldasVivas === 3;
     } else {
-      valorADevolver = 0;
+      valorADevolver = numeroCeldasVivas === 2 || numeroCeldasVivas === 3;
     }
 
     return valorADevolver;
@@ -143,10 +137,14 @@ class NuevoCanvas {
   anchoCanvas;
   altoCanvas;
 
-  constructor(nuevaRejillaCanvas, filasRejilla, columnasRejilla) {
+  constructor(
+    nuevaRejillaCanvas,
+    numeroDeFilasRejilla,
+    numeroDeColumnasRejilla
+  ) {
     this.nuevaRejilla = nuevaRejillaCanvas;
-    this.filasRejilla = filasRejilla;
-    this.columnasRejilla = columnasRejilla;
+    this.filasRejilla = numeroDeFilasRejilla;
+    this.columnasRejilla = numeroDeColumnasRejilla;
     this.ctx = this.nuevaRejilla.getContext("2d");
     this.anchoCanvas = this.nuevaRejilla.width;
     this.altoCanvas = this.nuevaRejilla.height;
