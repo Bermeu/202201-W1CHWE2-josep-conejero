@@ -90,22 +90,9 @@ class NuevoCanvas {
     this.ctx.fillRect(posicionX, posicionY, this.anchoCelda, this.altoCelda);
     this.dibujarRejilla();
   }
+
+  borrarRejilla() {}
 }
-
-const rejillaCanvas = document.querySelector(".rejillaCanvas");
-const filasRejilla = 10;
-const columnasRejilla = 10;
-const tabl1 = new Tablero(filasRejilla, columnasRejilla);
-const nuevoCanvas = new NuevoCanvas(
-  rejillaCanvas,
-  filasRejilla,
-  columnasRejilla
-);
-
-tabl1.generarRejillaLogicaVacia();
-tabl1.mostrarRejilla();
-nuevoCanvas.dibujarRejilla();
-nuevoCanvas.dibujarCelda([3, 1]);
 
 function getMousePos(rejillaCanvasElement, evt) {
   const rect = rejillaCanvasElement.getBoundingClientRect();
@@ -134,6 +121,20 @@ function obtenerCoordenadas(
   return coordenadas;
 }
 
+const rejillaCanvas = document.querySelector(".rejillaCanvas");
+const filasRejilla = 10;
+const columnasRejilla = 10;
+const elementoTablero = new Tablero(filasRejilla, columnasRejilla);
+const nuevoCanvas = new NuevoCanvas(
+  rejillaCanvas,
+  filasRejilla,
+  columnasRejilla
+);
+let temporizador;
+const buttonPlay = document.querySelector(".button--play");
+const buttonStop = document.querySelector(".button--stop");
+const buttonRestart = document.querySelector(".button--restart");
+
 rejillaCanvas.addEventListener(
   "click",
   (evt) => {
@@ -141,14 +142,45 @@ rejillaCanvas.addEventListener(
     const coordenadas = obtenerCoordenadas(
       mousePos.x,
       mousePos.y,
-      tabl1.numeroFilas,
-      tabl1.numeroColumnas,
+      elementoTablero.numeroFilas,
+      elementoTablero.numeroColumnas,
       rejillaCanvas
     );
-    const antiguoValorDeCelda = tabl1.obtenerValorCelda(coordenadas);
+    const antiguoValorDeCelda = elementoTablero.obtenerValorCelda(coordenadas);
     const nuevoValorCelda = antiguoValorDeCelda ? 0 : 1;
-    tabl1.actualizarCelda(coordenadas, nuevoValorCelda);
+    elementoTablero.actualizarCelda(coordenadas, nuevoValorCelda);
     nuevoCanvas.dibujarCelda([coordenadas[0], coordenadas[1]], nuevoValorCelda);
   },
   false
 );
+
+function activarTemporizador() {
+  // aquí se pintará la rejilla (que tendrá en cuenta el recálculo)
+}
+
+function activarTimer() {
+  temporizador = setInterval(activarTemporizador, 500);
+}
+
+function interrumpirTemporizador() {
+  clearInterval(temporizador);
+}
+
+function empezarJuego() {
+  activarTimer();
+}
+
+function reiniciarRejilla() {
+  interrumpirTemporizador();
+  nuevoCanvas.borrarRejilla();
+  elementoTablero.generarRejillaLogicaVacia();
+}
+
+elementoTablero.generarRejillaLogicaVacia();
+elementoTablero.mostrarRejilla();
+nuevoCanvas.dibujarRejilla();
+nuevoCanvas.dibujarCelda([3, 1]);
+
+buttonPlay.addEventListener("click", empezarJuego);
+buttonStop.addEventListener("click", interrumpirTemporizador);
+buttonRestart.addEventListener("click", reiniciarRejilla);
