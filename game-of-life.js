@@ -1,13 +1,14 @@
+/* eslint-disable max-classes-per-file */
 /* eslint-disable lines-between-class-members */
 class Tablero {
   rejilla;
   numeroFilas;
   numeroColumnas;
 
-  constructor() {
+  constructor(numeroTotalFilas, numeroTotalColumnas) {
     this.rejilla = [];
-    this.numeroFilas = 4;
-    this.numeroColumnas = 4;
+    this.numeroFilas = numeroTotalFilas;
+    this.numeroColumnas = numeroTotalColumnas;
   }
 
   mostrarRejilla() {
@@ -22,6 +23,7 @@ class Tablero {
   }
 
   generarRejillaLogicaVacia() {
+    this.rejilla = [];
     let rejillaAuxiliar = [];
     for (let fila = 0; fila < this.numeroFilas; fila++) {
       for (let columna = 0; columna < this.numeroColumnas; columna++) {
@@ -32,10 +34,9 @@ class Tablero {
     }
   }
 
-  vaciarRejillaLogica() {
-    this.rejilla = [];
-    this.generarRejillaLogicaVacia();
-  }
+  /* vaciarRejillaLogica() {
+    // this.generarRejillaLogicaVacia();
+  } */
 
   obtenerValorCelda(coordenadas) {
     return this.rejilla[coordenadas[0]][coordenadas[1]];
@@ -43,15 +44,75 @@ class Tablero {
 
   actualizarCelda(coordenadas, valorNuevo) {
     this.rejilla[coordenadas[0]][coordenadas[1]] = valorNuevo;
-    debugger;
+  }
+}
+
+class NuevoCanvas {
+  nuevaRejilla;
+  ctx;
+  filasRejilla;
+  columnasRejilla;
+  anchoCelda;
+  altoCelda;
+  anchoCanvas;
+  altoCanvas;
+
+  constructor(nuevaRejillaCanvas, filasRejilla, columnasRejilla) {
+    this.nuevaRejilla = nuevaRejillaCanvas;
+    this.filasRejilla = filasRejilla;
+    this.columnasRejilla = columnasRejilla;
+    this.ctx = this.nuevaRejilla.getContext("2d");
+    this.anchoCanvas = this.nuevaRejilla.width;
+    this.altoCanvas = this.nuevaRejilla.height;
+    this.anchoCelda = this.anchoCanvas / this.columnasRejilla;
+    this.altoCelda = this.altoCanvas / this.filasRejilla;
+  }
+
+  dibujarRejilla() {
+    for (let i = 0; i < this.columnasRejilla; i++) {
+      this.ctx.strokeStyle = "rgb(117, 117, 113)";
+      this.ctx.beginPath();
+      this.ctx.moveTo(this.anchoCelda * i, 0);
+      this.ctx.lineTo(this.anchoCelda * i, this.altoCanvas);
+      this.ctx.closePath();
+      this.ctx.stroke();
+    }
+    for (let j = 0; j < this.filasRejilla; j++) {
+      this.ctx.strokeStyle = "rgb(117, 117, 113)";
+      this.ctx.beginPath();
+      this.ctx.moveTo(0, this.altoCelda * j);
+      this.ctx.lineTo(this.anchoCanvas, this.altoCelda * j);
+      this.ctx.closePath();
+      this.ctx.stroke();
+    }
+  }
+
+  dibujarCelda(coordenadas, valor) {
+    this.ctx.fillStyle = valor ? "#000" : "#fff";
+    const posicionX = coordenadas[0] * this.anchoCelda;
+    const posicionY = coordenadas[1] * this.altoCelda;
+    this.ctx.fillRect(posicionX, posicionY, this.anchoCelda, this.altoCelda);
+    this.dibujarRejilla();
   }
 }
 
 const rejillaCanvas = document.querySelector(".rejillaCanvas");
-const ctx = rejillaCanvas.getContext("2d");
-const tabl1 = new Tablero();
+
+// const ctx = rejillaCanvas.getContext("2d");
+
+const filasRejilla = 4;
+const columnasRejilla = 4;
+const tabl1 = new Tablero(filasRejilla, columnasRejilla);
 tabl1.generarRejillaLogicaVacia();
 tabl1.mostrarRejilla();
+const nuevoCanvas = new NuevoCanvas(
+  rejillaCanvas,
+  filasRejilla,
+  columnasRejilla
+);
+
+nuevoCanvas.dibujarRejilla();
+nuevoCanvas.dibujarCelda([3, 1]);
 
 function getMousePos(rejillaCanvasElement, evt) {
   const rect = rejillaCanvasElement.getBoundingClientRect();
@@ -94,6 +155,7 @@ rejillaCanvas.addEventListener(
     const antiguoValorDeCelda = tabl1.obtenerValorCelda(coordenadas);
     const nuevoValorCelda = antiguoValorDeCelda ? 0 : 1;
     tabl1.actualizarCelda(coordenadas, nuevoValorCelda);
+    nuevoCanvas.dibujarCelda([coordenadas[0], coordenadas[1]], nuevoValorCelda);
   },
   false
 );
