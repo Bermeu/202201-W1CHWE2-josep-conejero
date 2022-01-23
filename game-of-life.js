@@ -37,9 +37,9 @@ class Tablero {
     this.generarRejillaLogicaVacia();
   }
 
-  cumpleRegla1() {
+  /* cumpleRegla1() {
     return true;
-  }
+  } */
 }
 
 const tabl1 = new Tablero();
