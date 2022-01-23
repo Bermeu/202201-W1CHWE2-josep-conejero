@@ -23,10 +23,6 @@ class Tablero {
     }
   }
 
-  /* obtenerNumeroCeldasVivas(valores) {
-    return valores.reduce((acumulador, numero) => acumulador + numero, 0);
-  } */
-
   celdaSiguiente(columna, fila) {
     const celdasContiguas = [];
     let valorADevolver = 0;
@@ -110,6 +106,10 @@ class Tablero {
     return valorADevolver;
   }
 
+  actualizarRejilla() {
+    this.rejilla = this.calcularSiguienteRejilla();
+  }
+
   calcularSiguienteRejilla() {
     let rejillaAuxiliar = [];
     for (let fila = 0; fila < this.numeroFilas; fila++) {
@@ -179,6 +179,14 @@ class NuevoCanvas {
     this.dibujarRejilla();
   }
 
+  dibujarTodasLasCeldas(rejilla) {
+    for (let fila = 0; fila < this.filasRejilla; fila++) {
+      for (let columna = 0; columna < this.columnasRejilla; columna++) {
+        this.dibujarCelda([columna, fila], rejilla[columna][fila]);
+      }
+    }
+  }
+
   borrarRejilla() {
     this.ctx.clearRect(0, 0, this.anchoCanvas, this.altoCanvas);
     this.dibujarRejilla();
@@ -246,7 +254,8 @@ rejillaCanvas.addEventListener(
 );
 
 function activarTemporizador() {
-  // aquí se pintará la rejilla (que tendrá en cuenta el recálculo)
+  elementoTablero.actualizarRejilla();
+  nuevoCanvas.dibujarTodasLasCeldas(elementoTablero.rejilla);
 }
 
 function activarTimer() {
