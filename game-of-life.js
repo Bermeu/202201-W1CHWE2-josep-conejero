@@ -91,7 +91,10 @@ class NuevoCanvas {
     this.dibujarRejilla();
   }
 
-  borrarRejilla() {}
+  borrarRejilla() {
+    this.ctx.clearRect(0, 0, this.anchoCanvas, this.altoCanvas);
+    this.dibujarRejilla();
+  }
 }
 
 function getMousePos(rejillaCanvasElement, evt) {
