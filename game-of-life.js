@@ -11,17 +11,6 @@ class Tablero {
     this.numeroColumnas = numeroTotalColumnas;
   }
 
-  mostrarRejilla() {
-    let cadena = "";
-    for (let fila = 0; fila < this.numeroFilas; fila++) {
-      for (let columna = 0; columna < this.numeroColumnas; columna++) {
-        cadena += this.rejilla[fila][columna];
-      }
-      console.log(fila, cadena);
-      cadena = "";
-    }
-  }
-
   generarRejillaLogicaVacia() {
     this.rejilla = [];
     let rejillaAuxiliar = [];
@@ -32,6 +21,107 @@ class Tablero {
       this.rejilla.push(rejillaAuxiliar);
       rejillaAuxiliar = [];
     }
+  }
+
+  celdaSiguiente(columna, fila) {
+    const celdasContiguas = [];
+    let valorADevolver = 0;
+
+    if (columna === 0 && fila === 0) {
+      celdasContiguas.push(this.rejilla[1][0]);
+      celdasContiguas.push(this.rejilla[1][1]);
+      celdasContiguas.push(this.rejilla[0][1]);
+    } else if (columna === 0 && fila === this.numeroFilas - 1) {
+      celdasContiguas.push(this.rejilla[0][this.numeroFilas - 2]);
+      celdasContiguas.push(this.rejilla[1][this.numeroFilas - 2]);
+      celdasContiguas.push(this.rejilla[1][this.numeroFilas - 1]);
+    } else if (columna === this.numeroColumnas - 1 && fila === 0) {
+      celdasContiguas.push(this.rejilla[this.numeroColumnas - 1][1]);
+      celdasContiguas.push(this.rejilla[this.numeroColumnas - 2][1]);
+      celdasContiguas.push(this.rejilla[this.numeroColumnas - 2][0]);
+    } else if (
+      columna === this.numeroColumnas - 1 &&
+      fila === this.numeroFilas - 1
+    ) {
+      celdasContiguas.push(
+        this.rejilla[this.numeroColumnas - 2][this.numeroFilas - 1]
+      );
+      celdasContiguas.push(
+        this.rejilla[this.numeroColumnas - 2][this.numeroFilas - 2]
+      );
+      celdasContiguas.push(
+        this.rejilla[this.numeroColumnas - 1][this.numeroFilas - 2]
+      );
+    } else if (columna === 0) {
+      celdasContiguas.push(this.rejilla[0][fila - 1]);
+      celdasContiguas.push(this.rejilla[0][fila + 1]);
+      celdasContiguas.push(this.rejilla[1][fila]);
+      celdasContiguas.push(this.rejilla[1][fila + 1]);
+      celdasContiguas.push(this.rejilla[1][fila - 1]);
+    } else if (columna === this.numeroColumnas - 1) {
+      celdasContiguas.push(this.rejilla[this.numeroColumnas - 1][fila - 1]);
+      celdasContiguas.push(this.rejilla[this.numeroColumnas - 1][fila + 1]);
+      celdasContiguas.push(this.rejilla[this.numeroColumnas - 2][fila]);
+      celdasContiguas.push(this.rejilla[this.numeroColumnas - 2][fila + 1]);
+      celdasContiguas.push(this.rejilla[this.numeroColumnas - 2][fila - 1]);
+    } else if (fila === 0) {
+      celdasContiguas.push(this.rejilla[columna - 1][0]);
+      celdasContiguas.push(this.rejilla[columna + 1][0]);
+      celdasContiguas.push(this.rejilla[columna][1]);
+      celdasContiguas.push(this.rejilla[columna + 1][1]);
+      celdasContiguas.push(this.rejilla[columna - 1][1]);
+    } else if (fila === this.numeroFilas - 1) {
+      celdasContiguas.push([columna - 1][this.rejilla[this.numeroFilas - 1]]);
+      celdasContiguas.push([columna + 1][this.rejilla[this.numeroFilas - 1]]);
+      celdasContiguas.push([columna][this.rejilla[this.numeroFilas - 2]]);
+      celdasContiguas.push([columna + 1][this.rejilla[this.numeroFilas - 2]]);
+      celdasContiguas.push([columna - 1][this.rejilla[this.numeroFilas - 2]]);
+    } else {
+      celdasContiguas.push(this.rejilla[columna - 1][fila - 1]);
+      celdasContiguas.push(this.rejilla[columna][fila - 1]);
+      celdasContiguas.push(this.rejilla[columna + 1][fila - 1]);
+      celdasContiguas.push(this.rejilla[columna + 1][fila]);
+      celdasContiguas.push(this.rejilla[columna + 1][fila + 1]);
+      celdasContiguas.push(this.rejilla[columna][fila + 1]);
+      celdasContiguas.push(this.rejilla[columna - 1][fila + 1]);
+      celdasContiguas.push(this.rejilla[columna - 1][fila]);
+    }
+
+    const numeroCeldasVivas = celdasContiguas.reduce(
+      (acumulador, numero) => acumulador + numero,
+      0
+    );
+    if (this.rejilla[columna][fila] === 0) {
+      if (numeroCeldasVivas === 3) {
+        valorADevolver = 1;
+      } else {
+        valorADevolver = 0;
+      }
+    } else if (numeroCeldasVivas === 2 || numeroCeldasVivas === 3) {
+      valorADevolver = 1;
+    } else {
+      valorADevolver = 0;
+    }
+
+    return valorADevolver;
+  }
+
+  actualizarRejilla() {
+    this.rejilla = this.calcularSiguienteRejilla();
+  }
+
+  calcularSiguienteRejilla() {
+    let rejillaAuxiliar = [];
+    const rejillaADevolver = [];
+    for (let fila = 0; fila < this.numeroFilas; fila++) {
+      for (let columna = 0; columna < this.numeroColumnas; columna++) {
+        rejillaAuxiliar.push(this.celdaSiguiente(columna, fila));
+      }
+      rejillaADevolver.push(rejillaAuxiliar);
+      rejillaAuxiliar = [];
+    }
+
+    return rejillaADevolver;
   }
 
   obtenerValorCelda(coordenadas) {
@@ -90,22 +180,20 @@ class NuevoCanvas {
     this.ctx.fillRect(posicionX, posicionY, this.anchoCelda, this.altoCelda);
     this.dibujarRejilla();
   }
+
+  dibujarTodasLasCeldas(rejilla) {
+    for (let fila = 0; fila < this.filasRejilla; fila++) {
+      for (let columna = 0; columna < this.columnasRejilla; columna++) {
+        this.dibujarCelda([columna, fila], rejilla[columna][fila]);
+      }
+    }
+  }
+
+  borrarRejilla() {
+    this.ctx.clearRect(0, 0, this.anchoCanvas, this.altoCanvas);
+    this.dibujarRejilla();
+  }
 }
-
-const rejillaCanvas = document.querySelector(".rejillaCanvas");
-const filasRejilla = 10;
-const columnasRejilla = 10;
-const tabl1 = new Tablero(filasRejilla, columnasRejilla);
-const nuevoCanvas = new NuevoCanvas(
-  rejillaCanvas,
-  filasRejilla,
-  columnasRejilla
-);
-
-tabl1.generarRejillaLogicaVacia();
-tabl1.mostrarRejilla();
-nuevoCanvas.dibujarRejilla();
-nuevoCanvas.dibujarCelda([3, 1]);
 
 function getMousePos(rejillaCanvasElement, evt) {
   const rect = rejillaCanvasElement.getBoundingClientRect();
@@ -134,6 +222,20 @@ function obtenerCoordenadas(
   return coordenadas;
 }
 
+const rejillaCanvas = document.querySelector(".rejillaCanvas");
+const filasRejilla = 10;
+const columnasRejilla = 10;
+const elementoTablero = new Tablero(filasRejilla, columnasRejilla);
+const nuevoCanvas = new NuevoCanvas(
+  rejillaCanvas,
+  filasRejilla,
+  columnasRejilla
+);
+let temporizador;
+const buttonPlay = document.querySelector(".button--play");
+const buttonStop = document.querySelector(".button--stop");
+const buttonRestart = document.querySelector(".button--restart");
+
 rejillaCanvas.addEventListener(
   "click",
   (evt) => {
@@ -141,14 +243,45 @@ rejillaCanvas.addEventListener(
     const coordenadas = obtenerCoordenadas(
       mousePos.x,
       mousePos.y,
-      tabl1.numeroFilas,
-      tabl1.numeroColumnas,
+      elementoTablero.numeroFilas,
+      elementoTablero.numeroColumnas,
       rejillaCanvas
     );
-    const antiguoValorDeCelda = tabl1.obtenerValorCelda(coordenadas);
+    const antiguoValorDeCelda = elementoTablero.obtenerValorCelda(coordenadas);
     const nuevoValorCelda = antiguoValorDeCelda ? 0 : 1;
-    tabl1.actualizarCelda(coordenadas, nuevoValorCelda);
+    elementoTablero.actualizarCelda(coordenadas, nuevoValorCelda);
     nuevoCanvas.dibujarCelda([coordenadas[0], coordenadas[1]], nuevoValorCelda);
   },
   false
 );
+
+function activarTemporizador() {
+  elementoTablero.actualizarRejilla();
+
+  nuevoCanvas.dibujarTodasLasCeldas(elementoTablero.rejilla);
+}
+
+function activarTimer() {
+  temporizador = setInterval(activarTemporizador, 500);
+}
+
+function interrumpirTemporizador() {
+  clearInterval(temporizador);
+}
+
+function empezarJuego() {
+  activarTimer();
+}
+
+function reiniciarRejilla() {
+  interrumpirTemporizador();
+  nuevoCanvas.borrarRejilla();
+  elementoTablero.generarRejillaLogicaVacia();
+}
+
+elementoTablero.generarRejillaLogicaVacia();
+nuevoCanvas.dibujarRejilla();
+
+buttonPlay.addEventListener("click", empezarJuego);
+buttonStop.addEventListener("click", interrumpirTemporizador);
+buttonRestart.addEventListener("click", reiniciarRejilla);
