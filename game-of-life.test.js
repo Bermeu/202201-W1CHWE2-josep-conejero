@@ -38,7 +38,70 @@ class Tablero {
   }
 }
 
+const rejillaCanvas = document.querySelector(".rejillaCanvas");
+const ctx = rejillaCanvas.getContext("2d");
+const anchoCanvas = rejillaCanvas.width;
+alert(anchoCanvas);
 const tabl1 = new Tablero();
+
+function getMousePos(rejillaCanvasElement, evt) {
+  const rect = rejillaCanvasElement.getBoundingClientRect();
+  return {
+    x: evt.clientX - rect.left,
+    y: evt.clientY - rect.top,
+  };
+}
+
+function obtenerCoordenadas(
+  posicionX,
+  posicionY,
+  numeroMaximoFilas,
+  numeroMaximoColumnas
+) {
+  const posicion = [];
+  if ((posicionY < 540) & (posicionX > 110) & (posicionX < 670)) {
+    if (posicionX > 110 && posicionX < 190) {
+      columna = 0;
+    }
+    if (posicionX > 190 && posicionX < 270) {
+      columna = 1;
+    }
+    if (posicionX > 270 && posicionX < 350) {
+      columna = 2;
+    }
+    if (posicionX > 350 && posicionX < 430) {
+      columna = 3;
+    }
+    if (posicionX > 430 && posicionX < 510) {
+      columna = 4;
+    }
+    if (posicionX > 510 && posicionX < 590) {
+      columna = 5;
+    }
+    if (posicionX > 590 && posicionX < 670) {
+      columna = 6;
+    }
+  } else {
+    columna = -1;
+  }
+  return posicion;
+}
+
+rejillaCanvas.addEventListener(
+  "click",
+  (evt) => {
+    const mousePos = getMousePos(rejillaCanvas, evt);
+    const coordenadas = obtenerCoordenadas(
+      mousePos.x,
+      mousePos.y,
+      tabl1.numeroFilas,
+      tabl1.numeroColumnas
+    );
+    // const valorCeldaNuevo =
+    // actualizarCelda(coordenadas, valorCeldaNuevo){}
+  },
+  false
+);
 
 tabl1.generarRejillaLogicaVacia();
 tabl1.mostrarRejilla();
