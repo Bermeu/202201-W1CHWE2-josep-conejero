@@ -16,7 +16,7 @@ class Tablero {
       for (let columna = 0; columna < this.numeroColumnas; columna++) {
         cadena += this.rejilla[fila][columna];
       }
-      /*  console.log(fila, cadena); */
+      console.log(fila, cadena);
       cadena = "";
     }
   }
@@ -36,10 +36,6 @@ class Tablero {
     this.rejilla = [];
     this.generarRejillaLogicaVacia();
   }
-
-  /* cumpleRegla1() {
-    return true;
-  } */
 }
 
 const tabl1 = new Tablero();
@@ -50,19 +46,15 @@ tabl1.mostrarRejilla();
 describe("Given a generarRejillaLogicaVacia function", () => {
   describe("When it is invoked", () => {
     test("Then it should create an array 2x2 with 0's", () => {
-      // Arrange
-      // const rejillaInicial = [];
       const rejillaEsperada = [
         [0, 0],
         [0, 0],
       ];
 
-      // Act
       tabl1.generarRejillaLogicaVacia();
       const rejillaDevuelta = tabl1.rejilla;
 
-      // Assert
-      expect(rejillaDevuelta).toBe(rejillaEsperada);
+      expect(rejillaDevuelta).toBe(rejillaEsperada); // no funciona porque no es un valor primitivo
     });
   });
 });
