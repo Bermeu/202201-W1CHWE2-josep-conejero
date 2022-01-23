@@ -6,8 +6,8 @@ class Tablero {
 
   constructor() {
     this.rejilla = [];
-    this.numeroFilas = 2;
-    this.numeroColumnas = 2;
+    this.numeroFilas = 4;
+    this.numeroColumnas = 4;
   }
 
   mostrarRejilla() {
@@ -40,8 +40,50 @@ class Tablero {
 
 const rejillaCanvas = document.querySelector(".rejillaCanvas");
 const ctx = rejillaCanvas.getContext("2d");
-
 const tabl1 = new Tablero();
-
 tabl1.generarRejillaLogicaVacia();
 tabl1.mostrarRejilla();
+
+function getMousePos(rejillaCanvasElement, evt) {
+  const rect = rejillaCanvasElement.getBoundingClientRect();
+  return {
+    x: evt.clientX - rect.left,
+    y: evt.clientY - rect.top,
+  };
+}
+
+function obtenerCoordenadas(
+  posicionX,
+  posicionY,
+  numeroMaximoFilas,
+  numeroMaximoColumnas,
+  rejilla
+) {
+  const anchoCanvas = rejilla.width;
+  const altoCanvas = rejilla.height;
+  const anchoCelda = anchoCanvas / numeroMaximoColumnas;
+  const altoCelda = altoCanvas / numeroMaximoFilas;
+  const coordenadas = [0, 0];
+
+  coordenadas[0] = Math.trunc(posicionX / anchoCelda); // fila
+  coordenadas[1] = Math.trunc(posicionY / altoCelda); // columna
+
+  return coordenadas;
+}
+
+rejillaCanvas.addEventListener(
+  "click",
+  (evt) => {
+    const mousePos = getMousePos(rejillaCanvas, evt);
+    const coordenadas = obtenerCoordenadas(
+      mousePos.x,
+      mousePos.y,
+      tabl1.numeroFilas,
+      tabl1.numeroColumnas,
+      rejillaCanvas
+    );
+    // const valorCeldaNuevo =
+    // actualizarCelda(coordenadas, valorCeldaNuevo){}
+  },
+  false
+);
