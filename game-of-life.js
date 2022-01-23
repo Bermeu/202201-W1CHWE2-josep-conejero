@@ -38,6 +38,9 @@ class Tablero {
   }
 }
 
+const rejillaCanvas = document.querySelector(".rejillaCanvas");
+const ctx = rejillaCanvas.getContext("2d");
+
 const tabl1 = new Tablero();
 
 tabl1.generarRejillaLogicaVacia();
