@@ -1,30 +1,30 @@
 /* eslint-disable lines-between-class-members */
 class Tablero {
   rejilla;
-  filas;
-  columnas;
+  numeroFilas;
+  numeroColumnas;
 
   constructor() {
     this.rejilla = [];
-    this.filas = 10;
-    this.columnas = 10;
+    this.numeroFilas = 2;
+    this.numeroColumnas = 2;
   }
 
   mostrarRejilla() {
     let cadena = "";
-    for (let fila = 0; fila < this.filas; fila++) {
-      for (let columna = 0; columna < this.columnas; columna++) {
+    for (let fila = 0; fila < this.numeroFilas; fila++) {
+      for (let columna = 0; columna < this.numeroColumnas; columna++) {
         cadena += this.rejilla[fila][columna];
       }
-      console.log(fila, cadena);
+      /*  console.log(fila, cadena); */
       cadena = "";
     }
   }
 
   generarRejillaLogicaVacia() {
     let rejillaAuxiliar = [];
-    for (let fila = 0; fila < this.filas; fila++) {
-      for (let columna = 0; columna < this.columnas; columna++) {
+    for (let fila = 0; fila < this.numeroFilas; fila++) {
+      for (let columna = 0; columna < this.numeroColumnas; columna++) {
         rejillaAuxiliar.push(0);
       }
       this.rejilla.push(rejillaAuxiliar);
@@ -46,3 +46,23 @@ const tabl1 = new Tablero();
 
 tabl1.generarRejillaLogicaVacia();
 tabl1.mostrarRejilla();
+
+describe("Given a generarRejillaLogicaVacia function", () => {
+  describe("When it is invoked", () => {
+    test("Then it should create an array 2x2 with 0's", () => {
+      // Arrange
+      // const rejillaInicial = [];
+      const rejillaEsperada = [
+        [0, 0],
+        [0, 0],
+      ];
+
+      // Act
+      tabl1.generarRejillaLogicaVacia();
+      const rejillaDevuelta = tabl1.rejilla;
+
+      // Assert
+      expect(rejillaDevuelta).toBe(rejillaEsperada);
+    });
+  });
+});
