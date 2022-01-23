@@ -36,6 +36,15 @@ class Tablero {
     this.rejilla = [];
     this.generarRejillaLogicaVacia();
   }
+
+  obtenerValorCelda(coordenadas) {
+    return this.rejilla[coordenadas[0]][coordenadas[1]];
+  }
+
+  actualizarCelda(coordenadas, valorNuevo) {
+    this.rejilla[coordenadas[0]][coordenadas[1]] = valorNuevo;
+    debugger;
+  }
 }
 
 const rejillaCanvas = document.querySelector(".rejillaCanvas");
@@ -82,8 +91,9 @@ rejillaCanvas.addEventListener(
       tabl1.numeroColumnas,
       rejillaCanvas
     );
-    // const valorCeldaNuevo =
-    // actualizarCelda(coordenadas, valorCeldaNuevo){}
+    const antiguoValorDeCelda = tabl1.obtenerValorCelda(coordenadas);
+    const nuevoValorCelda = antiguoValorDeCelda ? 0 : 1;
+    tabl1.actualizarCelda(coordenadas, nuevoValorCelda);
   },
   false
 );
