@@ -112,14 +112,16 @@ class Tablero {
 
   calcularSiguienteRejilla() {
     let rejillaAuxiliar = [];
+    const rejillaADevolver = [];
     for (let fila = 0; fila < this.numeroFilas; fila++) {
       for (let columna = 0; columna < this.numeroColumnas; columna++) {
         rejillaAuxiliar.push(this.celdaSiguiente(columna, fila));
       }
-      this.rejilla.push(rejillaAuxiliar);
+      rejillaADevolver.push(rejillaAuxiliar);
       rejillaAuxiliar = [];
     }
-    return rejillaAuxiliar;
+
+    return rejillaADevolver;
   }
 
   obtenerValorCelda(coordenadas) {
@@ -255,6 +257,7 @@ rejillaCanvas.addEventListener(
 
 function activarTemporizador() {
   elementoTablero.actualizarRejilla();
+
   nuevoCanvas.dibujarTodasLasCeldas(elementoTablero.rejilla);
 }
 
@@ -277,9 +280,7 @@ function reiniciarRejilla() {
 }
 
 elementoTablero.generarRejillaLogicaVacia();
-elementoTablero.mostrarRejilla();
 nuevoCanvas.dibujarRejilla();
-nuevoCanvas.dibujarCelda([3, 1]);
 
 buttonPlay.addEventListener("click", empezarJuego);
 buttonStop.addEventListener("click", interrumpirTemporizador);
