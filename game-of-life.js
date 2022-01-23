@@ -21,7 +21,12 @@ class Tablero {
     }
   }
 
-  generarRejillaLogicaVacia() {
+  /* generarRejillaLogicaVacia() {
+    
+  } */
+
+  vaciarRejillaLogica() {
+    this.rejilla = [];
     let rejillaAuxiliar = [];
     for (let fila = 0; fila < this.numeroFilas; fila++) {
       for (let columna = 0; columna < this.numeroColumnas; columna++) {
@@ -30,11 +35,7 @@ class Tablero {
       this.rejilla.push(rejillaAuxiliar);
       rejillaAuxiliar = [];
     }
-  }
-
-  vaciarRejillaLogica() {
-    this.rejilla = [];
-    this.generarRejillaLogicaVacia();
+    // this.generarRejillaLogicaVacia();
   }
 
   obtenerValorCelda(coordenadas) {
