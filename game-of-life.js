@@ -1,19 +1,19 @@
 /* eslint-disable lines-between-class-members */
 class Tablero {
   rejilla;
-  filas;
-  columnas;
+  numeroFilas;
+  numeroColumnas;
 
   constructor() {
     this.rejilla = [];
-    this.filas = 10;
-    this.columnas = 10;
+    this.numeroFilas = 2;
+    this.numeroColumnas = 2;
   }
 
   mostrarRejilla() {
     let cadena = "";
-    for (let fila = 0; fila < this.filas; fila++) {
-      for (let columna = 0; columna < this.columnas; columna++) {
+    for (let fila = 0; fila < this.numeroFilas; fila++) {
+      for (let columna = 0; columna < this.numeroColumnas; columna++) {
         cadena += this.rejilla[fila][columna];
       }
       console.log(fila, cadena);
@@ -23,8 +23,8 @@ class Tablero {
 
   generarRejillaLogicaVacia() {
     let rejillaAuxiliar = [];
-    for (let fila = 0; fila < this.filas; fila++) {
-      for (let columna = 0; columna < this.columnas; columna++) {
+    for (let fila = 0; fila < this.numeroFilas; fila++) {
+      for (let columna = 0; columna < this.numeroColumnas; columna++) {
         rejillaAuxiliar.push(0);
       }
       this.rejilla.push(rejillaAuxiliar);
@@ -36,10 +36,6 @@ class Tablero {
     this.rejilla = [];
     this.generarRejillaLogicaVacia();
   }
-
-  /* cumpleRegla1() {
-    return true;
-  } */
 }
 
 const tabl1 = new Tablero();
