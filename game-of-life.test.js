@@ -42,3 +42,19 @@ const tabl1 = new Tablero();
 
 tabl1.generarRejillaLogicaVacia();
 tabl1.mostrarRejilla();
+
+describe("Given a generarRejillaLogicaVacia function", () => {
+  describe("When it is invoked", () => {
+    test("Then it should create an array 2x2 with 0's", () => {
+      const rejillaEsperada = [
+        [0, 0],
+        [0, 0],
+      ];
+
+      tabl1.generarRejillaLogicaVacia();
+      const rejillaDevuelta = tabl1.rejilla;
+
+      expect(rejillaDevuelta).toBe(rejillaEsperada); // no funciona porque no es un valor primitivo
+    });
+  });
+});
